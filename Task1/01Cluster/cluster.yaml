@@ -16,9 +16,8 @@ vpc:
       private-b: { id: subnet-05dfca373fa41f1fa }
 
 iamIdentityMappings:
-  - arn: arn:aws:iam::073762821266:role/poweruser
-    groups:
-      - system:masters
+  - groups: system:masters
+    rolearn: arn:aws:iam::073762821266:root
     username: admin
     noDuplicateARNs: true # prevents shadowing of ARNs
 
