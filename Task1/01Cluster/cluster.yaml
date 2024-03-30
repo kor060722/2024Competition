@@ -28,7 +28,7 @@ managedNodeGroups:
   - name: warm-node-group
     labels: { app: warm }
     instanceType: m5.large
-    instanceName: warm-node-instnace
+    instanceName: warm-node-instance
     desiredCapacity: 2
     minSize: 2
     maxSize: 20
