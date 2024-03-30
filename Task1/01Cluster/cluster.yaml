@@ -2,18 +2,18 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: warm-esk-cluster
+  name: warm-eks-cluster
   version: "1.29"
   region: ap-northeast-2
 
 vpc:
   subnets:
     public:
-      public-a: { id: subnet-081d8369f3e0bdd62 }
-      public-b: { id: subnet-00d28b87d3355c434 }
+      public-a: { id: subnet-0114e97320133cfd0 }
+      public-b: { id: subnet-0ff877124fa03b19a }
     private:
-      private-a: { id: subnet-06ea1ae7fd04192c8 }
-      private-b: { id: subnet-05dfca373fa41f1fa }
+      private-a: { id: subnet-0556b862aa0f17b7a }
+      private-b: { id: subnet-01b83b34eff432604 }
 
 iamIdentityMappings:
   - groups: system:masters
@@ -39,8 +39,6 @@ managedNodeGroups:
     iam:
       withAddonPolicies:
         imageBuilder: true
-        externalDNS: true
-        certManager: true
         cloudWatch: true
         awsLoadBalancerController: true
 
