@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions: #docker container run time version
+      java: corretto17
+            
+  pre_build:
+    commands:
+        - echo "--------------- pre_build ---------------"
+        - aws ecr get-login-password --region ap-northeast-2 | docker login --username AWS --password-stdin 073762821266.dkr.ecr.ap-northeast-2.amazonaws.com
+        
+  build:
+    commands:
+      - echo "--------------- build ---------------"
+      - chmod +x ./gradlew
+      - ./gradlew build
+      - export id=$(echo $CODEBUILD_BUILD_ID | cut -d ':' -f 2)
+      - docker build -t gongma-ecr .
+      - docker tag gongma-ecr:latest 073762821266.dkr.ecr.ap-northeast-2.amazonaws.com/gongma-ecr:$id
+      - echo id
+
+  post_build:
+    commands:
+      - docker push 073762821266.dkr.ecr.ap-northeast-2.amazonaws.com/gongma-ecr:$id
+      - printf '{"ImageURI":"%s"}' 073762821266.dkr.ecr.ap-northeast-2.amazonaws.com/gongma-ecr:$id > imageDetail.json #continer이름이랑 image uri를 imagedefinition.json에저장 
+artifacts:
+  files:
+    - imageDetail.json
+    - buildspec.yml
+    - taskdef.json
+    - appspec.yaml
